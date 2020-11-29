@@ -1,3 +1,5 @@
+
+from random import randint
 from borracho import BorrachoTradicional
 from campo import Campo
 from coordenada import Coordenada
@@ -32,3 +34,24 @@ def graficar(x, y):
     )
     grafica.line(x,y, legend="distancia media")
     show(grafica)
+
+if __name__ == "__main__":
+    distancia_por_caminata = []
+    distancias_caminata = [10,100,1000]
+    intentos = 10
+    
+    for pasos in distancia_por_caminata:
+        distancias  = simular_caminata(pasos, intentos,BorrachoTradicional ) 
+        distancia_media = round(sum(distancias)/len(distancias), 4)
+        distancia_maxima = max(distancias)
+        distancia_minima = min(distancias)
+        
+        distancia_por_caminata.append(distancia_media)
+        
+        print(f"{BorrachoTradicional.__name__} caminata aleatoria de {pasos} pasos")
+        print(f"Media: {distancia_media}")
+        print(f"Minima: {distancia_minima}")
+        print(f"Maxima: {distancia_maxima}")
+        print()
+        graficar(distancias_caminata, distancia_por_caminata)
+    
