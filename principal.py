@@ -3,7 +3,7 @@ from random import randint
 from borracho import BorrachoTradicional
 from campo import Campo
 from coordenada import Coordenada
-from bokeh.plotting import figure, show
+from bokeh.plotting import figure, show, output_file
 # Metodos que serviran para modelar en la clase principal
 
 def caminata(campo, borracho, pasos):
@@ -27,15 +27,17 @@ def simular_caminata(pasos, intentos, BorrachoTradicional):
     return distancias
 
 def graficar(x, y):
+    output_file("Camino_aleatorio.html")
     grafica = figure(
         title = "Camino aleatorio",
         x_axis_label= "pasos",
         y_axis_label= "distancia recorrida"
     )
-    grafica.line(x,y, legend="distancia media")
+    grafica.line(x, y, legend_label="distancia media")
     show(grafica)
 
 if __name__ == "__main__":
+    print("hola bienvenido!")
     distancia_por_caminata = []
     distancias_caminata = [10,100,1000]
     intentos = 10
@@ -54,4 +56,5 @@ if __name__ == "__main__":
         print(f"Maxima: {distancia_maxima}")
         print()
         graficar(distancias_caminata, distancia_por_caminata)
+    print("adios")
     
