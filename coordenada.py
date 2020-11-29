@@ -10,5 +10,5 @@ class Coordenada:
         delta_x = self.x - coordenada.x
         delta_y = self.y - coordenada.y
         return (delta_x**2 + delta_y**2)**0.5
-        
+         
     
