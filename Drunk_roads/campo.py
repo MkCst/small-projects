@@ -1,6 +1,3 @@
-from coordenada import Coordenada
-
-
 class Campo():
     def __init__(self):
         # Da la posicion del borracho
