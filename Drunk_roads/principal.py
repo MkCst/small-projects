@@ -33,7 +33,7 @@ def graficar(x, y):
     )
     grafica.line(x, y, legend_label="distancia media")
     show(grafica)
-
+# programa principal
 if __name__ == "__main__":
     print("hola bienvenido!")
     distancia_recorrida = []
