@@ -1,6 +1,6 @@
-from Drunk_roads.borracho import BorrachoTradicional
-from Drunk_roads.campo import Campo
-from Drunk_roads.coordenada import  Coordenada
+from borracho import BorrachoTradicional
+from campo import Campo
+from coordenada import  Coordenada
 from bokeh.plotting import figure, show, output_file
 
 # Metodos que serviran para modelar en la clase principal
