@@ -2,10 +2,10 @@ from math import sqrt, exp, pi
 
 class Estadisticos:
 
-    def __init__(self, elements) -> None:
+    def __init__(self, elements):
         self.v_media = self.mean(elements)
         self.v_varianza = self.variance(elements)
-        self.v_stdvcion = self.std_desv(self.v_varianza) #Desviacion estandar
+        self.v_stdvcion = self.std_desv(elements) #Desviacion estandar
         self.distribucion_normal = self.normal_distr(elements)
 
     def mean(self, elements):
@@ -16,10 +16,10 @@ class Estadisticos:
         sum_items = 0
         for i in elements:
             sum_items+=(i - var_med)**2
-        return sum_items
+        return sum_items/ len(elements)
 
-    def std_desv(self, var):
-        return sqrt(var)
+    def std_desv(self, elements):
+        return sqrt(self.variance(elements)) 
 
     def normal_distr(self, elemets):
         distrib = []
