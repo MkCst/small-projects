@@ -57,4 +57,3 @@ if __name__ == "__main__":
         print()
     graficar(pasos_totales, distancia_recorrida)
     print("adios")
-    
