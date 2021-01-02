@@ -2,7 +2,8 @@ from math import sqrt, exp, pi
 
 class Estadisticos:
 
-    def __init__(self, elements):
+    def var_estadisticos(self, elements):
+        """Devuelve todos los estadisticos asociados a los elementos"""
         self.v_media = self.mean(elements)
         self.v_varianza = self.variance(elements)
         self.v_stdvcion = self.std_desv(elements) #Desviacion estandar
