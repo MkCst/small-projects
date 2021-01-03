@@ -5,7 +5,6 @@ from statics import Estadisticos
 from bokeh.plotting import figure, output_file, show
 os.system("cls")
 
-tries = 10
 
 def estimar_pi(puntos):
     in_circle_x = []
@@ -25,32 +24,43 @@ def estimar_pi(puntos):
             out_circle_x.append(pos_x)
             out_circle_y.append(pos_y)
     # Pi estimado
-    valor_pi = (4 * (len(in_circle_x)+ len(in_circle_y)))/puntos
-    return (valor_pi, in_circle_x, in_circle_y, out_circle_x, out_circle_y)
-    
-def crear_muestra(tries):
-    pi_array = []
-    for i in range(tries):
-        pi_valor, in_x, in_y, out_x, out_y = estimar_pi(puntos)
-        pi_array.append(pi_valor)
-    return (pi_array, in_x, in_y, out_x, out_y)
-tries = 10
-puntos = 100
-deviation = 1
-presicion = 0.1
-iteracion = 1
-stds = Estadisticos()
+    valor_pi = (4 * len(in_circle_x))/puntos
+    graficar(in_circle_x, in_circle_y, out_circle_x, out_circle_y)
+    return valor_pi
 
-while deviation >=(presicion/1.96):
-    pi_array, in_x, in_y, out_x, out_y = crear_muestra(tries)
-    desviacion = stds.std_desv(pi_array)
-    varianza = stds.variance(pi_array)
-    media = stds.mean(pi_array)
-    print(f"iteraccion: {iteracion}")
+def graficar(in_x, in_y, out_x, out_y):
+    output_file("pipi.html")
+    plot = figure(plot_width=600, plot_height=600)
+    plot.circle(in_x, in_y, size=5, color="red", alpha = 0.5)
+    plot.circle(out_x, out_y, size=5, color="navy", alpha = 0.5)
+    show(plot)
+
+
+def info_estd(arreglo):
+    #Creacion del objeto para obtener los estadisticos del arreglo
+    stds = Estadisticos()
+    print("Los valores de pi resultantes son: ")
+    for i in arreglo:
+        print(i,end="| ")
+    print()
+    desviacion = stds.std_desv(arreglo)
+    varianza = stds.variance(arreglo)
+    media = stds.mean(arreglo)
     print(f"Desviacion estandar: {desviacion}")
     print(f"Varianza: {varianza}")
     print(f"Media: {media}")
-    print(f"intentos: {tries}\t Puntos: {puntos}")
-    puntos *= 10
-    tries *= 10
-    iteracion +=1
+
+
+def crear_muestra(tries):
+    #Valores de pi
+    pi_array = []
+    for i in range(tries):
+        puntos = int(input("Cuantos puntos tendra su muestra: "))
+        pi_valor = estimar_pi(puntos)
+        pi_array.append(pi_valor)
+    info_estd(pi_array)
+
+
+crear_muestra(4)
+
+
