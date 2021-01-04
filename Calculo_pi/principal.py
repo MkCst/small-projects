@@ -3,37 +3,37 @@ from random import uniform
 from math import sqrt
 from statics import Estadisticos
 from bokeh.plotting import figure, output_file, show
+from bokeh.models import ColumnDataSource
 os.system("cls")
 
 
 def estimar_pi(puntos):
-    in_circle_x = []
-    in_circle_y = []
-    out_circle_x = []
-    out_circle_y = []
-    pi_array = [] 
-    # Se encuentra dentro del circulo 
-    for i in range(puntos):
-        pos_x = uniform(-1,1)
-        pos_y = uniform(-1,1)
-        
-        if sqrt(pos_x**2 +pos_y**2)<=1:
-            in_circle_x.append(pos_x)
-            in_circle_y.append(pos_y)
-        else:
-            out_circle_x.append(pos_x)
-            out_circle_y.append(pos_y)
-    # Pi estimado
-    valor_pi = (4 * len(in_circle_x))/puntos
-    graficar(in_circle_x, in_circle_y, out_circle_x, out_circle_y)
+    coor_points = [(uniform(-1,1), uniform(-1,1)) for _ in range(puntos)]
+    in_circle = 0
+    for i in coor_points:
+        if sqrt(i[0]**2 + i[1]**2)<=1:
+            in_circle+=1
+    valor_pi = (4* in_circle) /puntos
+    graficar(coor_points)
+    #print(valor_pi)
     return valor_pi
 
-def graficar(in_x, in_y, out_x, out_y):
-    output_file("pipi.html")
-    plot = figure(plot_width=600, plot_height=600)
-    plot.circle(in_x, in_y, size=5, color="red", alpha = 0.5)
-    plot.circle(out_x, out_y, size=5, color="navy", alpha = 0.5)
-    show(plot)
+
+
+def graficar(arreglo):
+    in_circle = {"x_invalues": [i[0] for i in arreglo if sqrt(i[0]**2 +i[1]**2)<=1],
+        "y_invalues": [i[1] for i in arreglo if sqrt(i[0]**2 +i[1]**2)<=1],
+       }
+    out_circle = { 
+        "x_outvalues":[i[0] for i in arreglo if sqrt(i[0]**2 +i[1]**2)>1],
+        "y_outvalues":[i[1] for i in arreglo if sqrt(i[0]**2 +i[1]**2)>1]
+    }
+    in_source = ColumnDataSource(data=in_circle)
+    out_source = ColumnDataSource(data=out_circle)
+    p = figure()
+    p.circle(x='x_invalues', y='y_invalues', source=in_source, size=5, color="red")
+    p.circle(x='x_outvalues', y='y_outvalues', source=out_source, size=5, color="navy")
+    show(p)
 
 
 def info_estd(arreglo):
@@ -56,8 +56,7 @@ def crear_muestra(tries):
     pi_array = []
     for i in range(tries):
         puntos = int(input("Cuantos puntos tendra su muestra: "))
-        pi_valor = estimar_pi(puntos)
-        pi_array.append(pi_valor)
+        pi_array.append(estimar_pi(puntos))
     info_estd(pi_array)
 
 
